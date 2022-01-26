@@ -17,36 +17,37 @@ fun main() {
 
 }
 
-open class GestionLibrosIU1() {
+class GestionLibrosIU1() : GestionLibros() {
 
-    open fun preguntarPorUnLibro() {
+    override var xml = CatalogoLibrosXML
+    fun preguntarPorUnLibro() {
         println("Introduzca un ID: ")
         var idLibro = readln()
+
+
     }
+
 }
 
-open class GestionLibros(cargador: String, val idLibro: String) : CatalogoLibrosXML(cargador) {
+class GestionLibrosUI2() : GestionLibros() {
+    println("Introduzca un ID: ")
+    var idLibro = readln()
+    var infoLibro = infoLibro(idLibro)
 
-    val preguntar = GestionLibrosIU1()
 
-    init {
-        preguntar
+}
+open class GestionLibros() {
+
+
+    open var xml= CatalogoLibrosXML
+    var json = CatalogoLibrosJSON
+
+
+    init{
+        xml = CatalogoLibrosXML
+        json = CatalogoLibrosJSON
     }
 
-    open fun preguntarPorUnLibro() {
 
-        if (existeLibro(idLibro))
-            println("El libro $idLibro existe!")
-        else
-            println("El libro $idLibro NO existe!")
-    }
-
-    open fun mostrarInfoDeUnLibro() {
-        var infoLibro = infoLibro(idLibro)
-        if (!infoLibro.isEmpty())
-            println("La información sobre es la siguiente\n$infoLibro")
-        else
-            println("No se encontró información sobre el libro")
-    }
 
 }
