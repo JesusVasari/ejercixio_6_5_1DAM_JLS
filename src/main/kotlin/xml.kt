@@ -15,7 +15,7 @@ interface ReadXML {
     }
 }
 
-class CatalogoLibrosXML( val cargador: String):ReadXML {
+abstract class CatalogoLibrosXML( val cargador: String):ReadXML {
 
     companion object {
         val l = KotlinLogging.logger("LOG")
@@ -53,8 +53,8 @@ class CatalogoLibrosXML( val cargador: String):ReadXML {
     *
     * @return  Devuelve true si existe, `false` en caso contrario.
     * */
-    fun existeLibro(idLibro: String): Boolean {
-        var existe: Boolean
+    open fun existeLibro(idLibro: String): Boolean {
+        val existe: Boolean
         if (idLibro.isNullOrBlank())
             existe = false
         else {
@@ -77,8 +77,8 @@ class CatalogoLibrosXML( val cargador: String):ReadXML {
       *
       * @return  Devuelve true si existe, `false` en caso contrario.
       * */
-    fun infoLibro(idLibro: String): Map<String, Any> {
-        var m = mutableMapOf<String, Any>()
+    open fun infoLibro(idLibro: String): Map<String, Any> {
+        val m = mutableMapOf<String, Any>()
         if (!idLibro.isNullOrBlank())
             xmlDoc?.let {
                 var nodosLibro = obtenerListaNodosPorNombre(it, "book")

@@ -71,18 +71,20 @@ internal fun main() {
 }
 
 
-public class CatalogoLibrosJSON(cargador:String)
+abstract class CatalogoLibrosJSON(cargador:String) :ReadXML
 {
 
     private lateinit var libros: List<Book>
     companion object {
         val l = KotlinLogging.logger("LOG")
+
     }
     init {
         libros = cargador.fromJson<List<Book>>()
     }
     internal fun i(msg:String)
     {
+        logger
         CatalogoLibrosXML.l.info {"[Clase]"+ msg }
     }
     fun infoLibro(idLibro: String): Map<String, Any> {
