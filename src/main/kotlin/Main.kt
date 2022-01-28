@@ -71,7 +71,7 @@ internal fun main() {
 }
 
 
-abstract class CatalogoLibrosJSON(cargador:String) :ReadXML
+open class CatalogoLibrosJSON(cargador:String) :Comun
 {
 
     private lateinit var libros: List<Book>

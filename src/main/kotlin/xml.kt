@@ -8,14 +8,9 @@ import java.time.LocalDate
 import javax.xml.parsers.DocumentBuilderFactory
 
 
-interface ReadXML {
-     fun readXml(pathName: String): Document {
-        val xmlFile = File(pathName)
-        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile)
-    }
-}
 
-abstract class CatalogoLibrosXML( val cargador: String):ReadXML {
+
+ abstract class CatalogoLibrosXML(val cargador: String):Comun {
 
     companion object {
         val l = KotlinLogging.logger("LOG")
@@ -53,7 +48,7 @@ abstract class CatalogoLibrosXML( val cargador: String):ReadXML {
     *
     * @return  Devuelve true si existe, `false` en caso contrario.
     * */
-    open fun existeLibro(idLibro: String): Boolean {
+   override fun existeLibro(idLibro:String):Boolean {
         val existe: Boolean
         if (idLibro.isNullOrBlank())
             existe = false
@@ -77,7 +72,7 @@ abstract class CatalogoLibrosXML( val cargador: String):ReadXML {
       *
       * @return  Devuelve true si existe, `false` en caso contrario.
       * */
-    open fun infoLibro(idLibro: String): Map<String, Any> {
+   override fun infoLibro(idLibro: String): Map<String, Any> {
         val m = mutableMapOf<String, Any>()
         if (!idLibro.isNullOrBlank())
             xmlDoc?.let {
