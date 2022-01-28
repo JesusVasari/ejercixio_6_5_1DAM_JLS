@@ -14,60 +14,52 @@ fun main() {
     var portatil = "/home/edu/IdeaProjects/IESRA-DAM-Prog/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
     //var casa = "/home/usuario/Documentos/workspace/IdeaProjects/IESRA-DAM/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
 
-    val gestorDeLibros = gestionLibrosIU(portatil)
+    val gestorDeLibros = gestionLibros(portatil)
     gestorDeLibros.preguntarPorUnLibro()
     gestorDeLibros.mostrarInfoDeUnLibro()
 
 }
 
-interface Comun {
-    fun readXml(pathName: String): Document {
-        val xmlFile = File(pathName)
-        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile)
+interface AccesoCatalogo {
 
-    }
-
-    fun existeLibro()
-    fun infoLibro()
     fun existeLibro(idLibro: String): Boolean
     fun infoLibro(idLibro: String): Map<String, Any>
 }
-class gestionLibrosIU(cargador: String, override val cat: Comun) : gestionLibros(cargador) {
-    override fun existeLibro() {
-        TODO("Not yet implemented")
-    }
 
-    override fun existeLibro(idLibro: String): Boolean {
-        TODO("Not yet implemented")
-    }
+class gestionLibrosIU(val leer: gestorLeer, val print: gestorPrint) {
 
-    override fun infoLibro() {
-        TODO("Not yet implemented")
-    }
 
-    override fun infoLibro(idLibro: String): Map<String, Any> {
-        TODO("Not yet implemented")
+
+}
+
+interface gestorLeer {
+
+    fun preguntarLibro(){
+        var leer = readln()
     }
 
 }
 
-abstract class gestionLibros(cargador:String) : Comun
-{
+interface gestorPrint {
 
-    abstract val cat : Comun
+        var leer : gestorLeer
 
+    }
+}
+
+open class gestionLibros(open val cat: AccesoCatalogo) {
 
     fun preguntarPorUnLibro() {
         println("Introduzca un ID: ")
         var idLibro = readln()
+
         if (cat.existeLibro(idLibro))
             println("El libro $idLibro existe!")
         else
             println("El libro $idLibro NO existe!")
     }
 
-    fun mostrarInfoDeUnLibro()
-    {
+    fun mostrarInfoDeUnLibro() {
         println("Introduzca un ID: ")
         var idLibro = readln()
         var infoLibro = cat.infoLibro(idLibro)

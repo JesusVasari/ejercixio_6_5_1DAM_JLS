@@ -3,14 +3,10 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
-import java.io.File
 import java.time.LocalDate
-import javax.xml.parsers.DocumentBuilderFactory
 
 
-
-
- abstract class CatalogoLibrosXML(val cargador: String):Comun {
+abstract class CatalogoLibrosXML(val cargador: String):AccesoCatalogo {
 
     companion object {
         val l = KotlinLogging.logger("LOG")
@@ -42,6 +38,11 @@ import javax.xml.parsers.DocumentBuilderFactory
         for (j in 0..e.attributes.length - 1)
             mMap.putIfAbsent(e.attributes.item(j).nodeName, e.attributes.item(j).nodeValue)
         return mMap
+    }
+
+    private fun readXml(pathName: String): Document {
+        val xmlFile = File(pathName)
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile)
     }
 
     /*

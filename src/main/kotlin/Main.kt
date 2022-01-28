@@ -71,7 +71,7 @@ internal fun main() {
 }
 
 
-open class CatalogoLibrosJSON(cargador:String) :Comun
+open class CatalogoLibrosJSON(cargador:String) :AccesoCatalogo
 {
 
     private lateinit var libros: List<Book>
@@ -87,11 +87,11 @@ open class CatalogoLibrosJSON(cargador:String) :Comun
         logger
         CatalogoLibrosXML.l.info {"[Clase]"+ msg }
     }
-    fun infoLibro(idLibro: String): Map<String, Any> {
+    override fun infoLibro(idLibro: String): Map<String, Any> {
         var book = libros.first{ it.id == idLibro }
         return book.serializeToMap()
     }
-    fun existeLibro(idLibro: String): Boolean {
+    override fun existeLibro(idLibro: String): Boolean {
         return libros.indexOfFirst { it.id == idLibro } >=0
     }
 }
