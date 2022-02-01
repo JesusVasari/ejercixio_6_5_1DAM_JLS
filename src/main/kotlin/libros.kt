@@ -1,8 +1,5 @@
-import org.w3c.dom.Document
-import java.io.File
 import java.util.logging.Level
 import java.util.logging.LogManager
-import javax.xml.parsers.DocumentBuilderFactory
 
 internal val l = LogManager.getLogManager().getLogger("").apply { level = Level.ALL }
 internal fun i(tag: String, msg: String) {
@@ -11,12 +8,12 @@ internal fun i(tag: String, msg: String) {
 
 
 fun main() {
-    var portatil = "/home/edu/IdeaProjects/IESRA-DAM-Prog/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
+    val portatil = "/home/edu/IdeaProjects/IESRA-DAM-Prog/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
     //var casa = "/home/usuario/Documentos/workspace/IdeaProjects/IESRA-DAM/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
-
-    val gestorDeLibros = gestionLibros(portatil)
-    gestorDeLibros.preguntarPorUnLibro()
-    gestorDeLibros.mostrarInfoDeUnLibro()
+    
+    val gestionLibros = gestionLibros(portatil)
+   gestionLibros.mostrarInfoDeUnLibro()
+    gestionLibros.preguntarPorUnLibro()
 
 }
 
@@ -26,47 +23,39 @@ interface AccesoCatalogo {
     fun infoLibro(idLibro: String): Map<String, Any>
 }
 
-class gestionLibrosIU(val leer: gestorLeer, val print: gestorPrint) {
 
 
+interface gestor {
 
-}
-
-interface gestorLeer {
-
-    fun preguntarLibro(){
-        var leer = readln()
+    fun preguntarLibro():String{
+        val leer = readln()?.toString()
+        return leer
     }
-
-}
-
-interface gestorPrint {
-
-        var leer : gestorLeer
-
+    fun sacarPantalla():String {
+       return "el libro es: "
     }
 }
 
-open class gestionLibros(open val cat: AccesoCatalogo) {
+
+
+open class gestionLibros(open val cat: AccesoCatalogo, open val gestor: gestor) {
 
     fun preguntarPorUnLibro() {
         println("Introduzca un ID: ")
-        var idLibro = readln()
+        val idLibro = gestor.preguntarLibro()
 
         if (cat.existeLibro(idLibro))
-            println("El libro $idLibro existe!")
+            gestor.sacarPantalla()
+
         else
-            println("El libro $idLibro NO existe!")
+           gestor.sacarPantalla()
     }
 
     fun mostrarInfoDeUnLibro() {
         println("Introduzca un ID: ")
-        var idLibro = readln()
+        val idLibro = gestor.preguntarLibro()
         var infoLibro = cat.infoLibro(idLibro)
-        if (!infoLibro.isEmpty())
-            println("La información sobre es la siguiente\n$infoLibro")
-        else
-            println("No se encontró información sobre el libro")
+       gestor.sacarPantalla()
     }
 
 }
